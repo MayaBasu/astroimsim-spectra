@@ -32,7 +32,7 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
 
         for (point,value) in &self.data{
             let location = self.grid1d.location(*point);
-            file.write_all(format!("{:?}   {:?}", location, value).as_bytes()).unwrap();
+            file.write_all(format!("\n{:?}   {:?}", location, value).as_bytes()).unwrap();
         }
 
     }
@@ -105,13 +105,15 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
         }
     }
     
-    pub fn apply_spectral_response(&mut self, mut spectral_response_curve: SpectralResponseCurve){
-        spectral_response_curve.re_grid(self.grid1d.clone());
+    pub fn apply_spectral_response(&mut self, mut spectral_response_curve: &SpectralResponseCurve){
+        spectral_response_curve.clone().re_grid(&self.grid1d);
         //TODO assert_eq!(spectral_response_curve.grid1d,self.grid1d);
         //TODO make this more efficient
         let mut new_values = Vec::with_capacity(self.data.len());
-        for ((self_point, self_value),(response_point,response_value)) in self.data.clone().into_iter().zip(spectral_response_curve.data){
+        for ((self_point, self_value),(response_point,response_value)) in self.data.clone().into_iter().zip(spectral_response_curve.data.clone()){
             assert_eq!(self_point,response_point);
+            println!("{:?}",self_point);
+            println!("{:?} {:?} {:?}",self_value,response_value,self_value*response_value );
             new_values.push((self_point,self_value*response_value))
         }
         self.data = new_values;
