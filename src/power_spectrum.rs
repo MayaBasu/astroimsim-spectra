@@ -106,7 +106,8 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
     }
     
     pub fn apply_spectral_response(&mut self, mut spectral_response_curve: &SpectralResponseCurve){
-        spectral_response_curve.clone().re_grid(&self.grid1d);
+       let mut spectral_response_curve = spectral_response_curve.clone();
+           spectral_response_curve.re_grid(&self.grid1d);
         //TODO assert_eq!(spectral_response_curve.grid1d,self.grid1d);
         //TODO make this more efficient
         let mut new_values = Vec::with_capacity(self.data.len());
