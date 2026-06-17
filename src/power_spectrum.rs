@@ -22,6 +22,8 @@ pub struct PowerSpectrum {
 }
 
 
+
+
 impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
 
     pub fn write_to_dat(&mut self,path:&str,header:&str){

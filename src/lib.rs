@@ -1,6 +1,6 @@
-mod power_spectrum;
-mod photonic_spectrum;
-mod spectral_response;
-mod visualize;
+pub mod power_spectrum;
+pub mod photonic_spectrum;
+pub mod spectral_response;
+pub mod visualize;
 
 
