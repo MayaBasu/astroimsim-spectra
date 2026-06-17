@@ -3,6 +3,7 @@ use std::io::{BufRead, BufReader, Write};
 use std::time::Instant;
 use astroimsim_geometry::grid1d::{Location1D, Neighbors, GRID1D};
 use crate::power_spectrum::PowerSpectrum;
+use crate::visualize::{visulaize, STANDARD_SPECTRAL_GRID};
 
 #[derive(Debug,Clone)]
 pub struct SpectralResponseCurve {
@@ -33,7 +34,8 @@ impl SpectralResponseCurve {
         self.data[index].1.clone()
     }
 
-    pub fn write_to_dat(&self,path:&str,header:&str){
+    pub fn write_to_dat(&mut self, path:&str, header:&str){
+        self.re_grid(&STANDARD_SPECTRAL_GRID);
         let mut file = File::create(path).expect("Could not create file");
         file.write_all(format!(
             "{:?} \n {:?} \n {:?} \n {:?} \n \n \n",
