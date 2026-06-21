@@ -122,7 +122,11 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
         self.data = new_values;
         
     }
-    
+    pub fn integrate(&self)->f64{
+        let sum:f64 = self.data.iter()
+            .map(|(_point_num,value)|value).sum();
+        sum*self.grid1d.num() as f64 *self.grid1d.step_size
+    }
 }
 
 
@@ -139,6 +143,12 @@ pub enum SpectrumUnits {
 
 #[derive(Clone, Debug)]
 pub struct Bands {
-    fuv:f64,
-    nuv:f64,
+    pub fuv:f64,
+    pub nuv:f64,
+}
+
+impl Bands  {
+    pub fn new(fuv:f64,nuv:f64)->Bands{
+        Bands{fuv,nuv}
+    }
 }
