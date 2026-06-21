@@ -5,6 +5,7 @@ use astroimsim_geometry::grid1d::GRID1D;
 use plotpy::{Curve, Plot};
 use rand::distr::Distribution;
 use rand_distr::Poisson;
+use crate::power_spectrum::SpectrumUnits::f_lambda;
 use crate::spectral_response::SpectralResponseCurve;
 
 pub const kB_CGS:f64 = 1.380649 *10e-16; //erg K−1
@@ -122,7 +123,8 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
         self.data = new_values;
         
     }
-    pub fn integrate(&self)->f64{
+    pub fn total_average_photon_flux(&mut self)->f64{
+        self.convert_to(&f_lambda);
         let sum:f64 = self.data.iter()
             .map(|(_point_num,value)|value).sum();
         sum*self.grid1d.num() as f64 *self.grid1d.step_size
