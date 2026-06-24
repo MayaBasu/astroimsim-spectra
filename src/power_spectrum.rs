@@ -116,8 +116,8 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
         let mut new_values = Vec::with_capacity(self.data.len());
         for ((self_point, self_value),(response_point,response_value)) in self.data.clone().into_iter().zip(spectral_response_curve.data.clone()){
             assert_eq!(self_point,response_point);
-            println!("{:?}",self_point);
-            println!("{:?} {:?} {:?}",self_value,response_value,self_value*response_value );
+          //  println!("{:?}",self_point);
+          //  println!("{:?} {:?} {:?}",self_value,response_value,self_value*response_value );
             new_values.push((self_point,self_value*response_value))
         }
         self.data = new_values;

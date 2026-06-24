@@ -63,22 +63,24 @@ impl SpectralResponseCurve {
             let line = line.trim()
                 .split(&delineator)
                 .map(|a|
-                         {println!("{:?}",a.trim());
+                         {//println!("{:?}",a.trim());
                     a.trim().parse::<f64>()})
                 .map(|result|
                     match result {
-                        Ok(value) => {println!("{:?}",value);value},
-                        Err(v) => {println!("COULDN:T PARSE {:?}",v);parsable = false; 0.0},
+                        Ok(value) => {//println!("{:?}",value);
+                            value},
+                        Err(v) => {//println!("COULDN:T PARSE {:?}",v);
+                             parsable = false; 0.0},
                     }).collect();
-            println!("{:?}",line);
+           // println!("{:?}",line);
             if parsable{
                 data.push(line)
             }
-            println!("{:?} ",parsable);
+           // println!("{:?} ",parsable);
         }
-        println!("Parsed {:?} lines in {:?}", data.len(), start.elapsed().as_millis());
-        println!("{:?}",data);
-        println!("{:?}",self.grid1d);
+        println!("Parsed {:?} lines in {:?} ms", data.len(), start.elapsed().as_millis());
+       // println!("{:?}",data);
+       // println!("{:?}",self.grid1d);
         assert_eq!(data.len(), self.grid1d.num(), "Retrieved a different number of records than expected");
 
 
@@ -92,7 +94,7 @@ impl SpectralResponseCurve {
             println!("Warning! There are different numbers of records for each line. This may mess up plotting or indicate a loading error. Will be plotting with {:?}", data[0].len() - 1)
         } //TODO run this function witha  "verbose" to list out the differences
  
-        println!("The first record is {:?} and the last is {:?}, snapping to grid: {:?}", data[0], data[data.len() - 1], self.grid1d);
+       // println!("The first record is {:?} and the last is {:?}, snapping to grid: {:?}", data[0], data[data.len() - 1], self.grid1d);
         let mut snapped_data = Vec::new();
         for values in data {
             let location = values[0]*self.grid1d.scale;
@@ -111,18 +113,18 @@ impl SpectralResponseCurve {
             let new_location = new_grid.location(point);
             let value = match self.grid1d.inside_or_outside(new_location) {
                 Location1D::TooHigh => {
-                    println!("new gridding {:?},location is {:?}, too high", point, new_location);
+                    //println!("new gridding {:?},location is {:?}, too high", point, new_location);
                     self.data[self.data.len() - 1].1.clone()
 
                 }
                 Location1D::TooLow => {
-                    println!("new gridding {:?},location is {:?}, too low", point, new_location);
+                    //println!("new gridding {:?},location is {:?}, too low", point, new_location);
                     self.data[0].1.clone()
                 }
                 Location1D::JustRight => {
                     match self.grid1d.find_neighbors(new_location) {
                         Neighbors::Two(lower_index, upper_index) => {
-                            println!("new gridding {:?},location is {:?}, just right, two neiborhs: {:?}", point, new_location, (lower_index, upper_index));
+                          //  println!("new gridding {:?},location is {:?}, just right, two neiborhs: {:?}", point, new_location, (lower_index, upper_index));
                             let lower = self.grid1d.location(lower_index);
                             let upper = self.grid1d.location(upper_index);
                             let lower_delta = new_location - lower;
