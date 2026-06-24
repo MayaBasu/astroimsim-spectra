@@ -127,7 +127,7 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
         self.convert_to(&f_lambda);
         let sum:f64 = self.data.iter()
             .map(|(_point_num,value)|value).sum();
-        sum*self.grid1d.num() as f64 *self.grid1d.step_size
+        sum as f64 *self.grid1d.step_size
     }
 }
 

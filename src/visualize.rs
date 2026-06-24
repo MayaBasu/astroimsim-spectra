@@ -25,7 +25,7 @@ pub fn visulaize(){
     pub const DICHROIC_GRID: GRID1D = GRID1D::new_empty(1.0,120.0,1000.0,0.01,1000.0);
     pub const MIRROR_GRID:GRID1D = GRID1D::new_empty(1.0,110.0,1100.0,0.01,1.0);
 
- //sd   let FUV_CONTAMINATION: SpectralResponseCurve = SpectralResponseCurve::new("FUV_CONTAMINATION",FUV_CONTAMINATION_GRID,FUV_CONTAMINATION_PATH);
+  //  let FUV_CONTAMINATION: SpectralResponseCurve = SpectralResponseCurve::new("FUV_CONTAMINATION",FUV_CONTAMINATION_GRID,FUV_CONTAMINATION_PATH);
    // let NUV_CONTAMINATION: SpectralResponseCurve = SpectralResponseCurve::new("NUV_CONTAMINATION",NUV_CONTAMINATION_GRID,NUV_CONTAMINATION_PATH);
     let mut FUV_DICHROIC: SpectralResponseCurve = SpectralResponseCurve::new("FUV_DICHROIC",DICHROIC_GRID,DICHROIC_PATH,1,"      ");
     let mut NUV_DICHROIC: SpectralResponseCurve = SpectralResponseCurve::new("NUV_DICHROIC",DICHROIC_GRID,DICHROIC_PATH,2,"      ");
@@ -43,12 +43,12 @@ pub fn visulaize(){
     NUV_FILTER_QE.write_to_dat("nuv_filter_qe","NUV filter cuve + NUV QE");
 
 
-    //  let DICHROIC: SpectralResponseCurve = SpectralResponseCurve::new("DICHROIC",DICHROIC_GRID,DICHROIC_PATH);
+      //let DICHROIC: SpectralResponseCurve = SpectralResponseCurve::new("DICHROIC",DICHROIC_GRID,DICHROIC_PATH);
     let mut MIRROR_CURVE:SpectralResponseCurve = SpectralResponseCurve::new("Mirror", MIRROR_GRID, MIRROR_PATH,1,"    ");
-    //MIRROR_CURVE.re_grid(&STANDARD_SPECTRAL_GRID);
+    MIRROR_CURVE.re_grid(&STANDARD_SPECTRAL_GRID);
     let mut MIRROR_CURVE_3 = MIRROR_CURVE.clone();
     MIRROR_CURVE_3.self_compose(3);
-    //MIRROR_CURVE_3.re_grid(&STANDARD_SPECTRAL_GRID);
+    MIRROR_CURVE_3.re_grid(&STANDARD_SPECTRAL_GRID);
 
 
     FUV_DICHROIC.write_to_dat("fuvdichroic","fuv path of dichroic (transmission)");
@@ -57,7 +57,7 @@ pub fn visulaize(){
     let mut input_spectrum = PowerSpectrum::flat_AB(20.0,STANDARD_SPECTRAL_GRID,"Input Spectrum");
 
     input_spectrum.convert_to(&SpectrumUnits::f_lambda);
- //   input_spectrum.write_to_dat("input","initial spectrum");
+    input_spectrum.write_to_dat("input","initial spectrum");
 
     MIRROR_CURVE.write_to_dat("mirror","mirror response curve");
     MIRROR_CURVE_3.write_to_dat("mirror3","3 mirror response curves composed together");
