@@ -40,7 +40,7 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
 
     }
     pub fn convert_to_cgs(&mut self)  {
-        println!("Converting {:?} to CGS",self.sum());
+      //  println!("Converting {:?} to CGS",self.sum());
 
         let mut cgs_data = Vec::with_capacity(self.data.len());
         for (point,value) in &self.data{
@@ -61,12 +61,12 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
         }
         self.data = cgs_data;
         self.units = SpectrumUnits::F_nu;
-        self.sum();
+      //  self.sum();
     }
     pub fn convert_to(&mut self,unit:&SpectrumUnits) {
         self.convert_to_cgs();
-        println!("Converting to else from ");
-        self.sum();
+     //   println!("Converting to else from ");
+        //self.sum();
         let mut converted_values = Vec::with_capacity(self.data.len());
         for (point, value) in &self.data {
             let lambda = self.grid1d.location(*point);
@@ -82,7 +82,7 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
         }
         self.data = converted_values;
         self.units = unit.clone();
-        self.sum();
+       // self.sum();
     }
 
     pub fn flat_AB(ab_mag:f64,grid1d:GRID1D,label:&'static str)-> PowerSpectrum {
@@ -155,7 +155,7 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
 
     pub fn sum(&self)-> f64{
         let sum = self.data.iter().map(|(i,v)| v).sum();
-        println!("SUM is {:?}, units are {:?}",sum, self.units);
+     //   println!("SUM is {:?}, units are {:?}",sum, self.units);
         //println!("{:?}",self.data);
         sum
     }

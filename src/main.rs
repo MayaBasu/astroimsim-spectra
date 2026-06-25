@@ -12,7 +12,7 @@ mod visualize;
 
 
 fn main() {
-    /*
+
     let grid: GRID1D = GRID1D::new_empty(1.0,100.0,1000.0,0.01,1.0);
 
     let mut a = PowerSpectrum::flat(1.0,grid,"flat");
@@ -24,8 +24,8 @@ fn main() {
 
     a.convert_to(&f_lambda);
 
-     */
-    visulaize()
+
+   // visulaize()
 
 
 
