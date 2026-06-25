@@ -5,7 +5,7 @@ use astroimsim_geometry::grid1d::GRID1D;
 use plotpy::{Curve, Plot};
 use rand::distr::Distribution;
 use rand_distr::Poisson;
-use crate::power_spectrum::SpectrumUnits::f_lambda;
+
 use crate::spectral_response::SpectralResponseCurve;
 
 pub const kB_CGS:f64 = 1.380649 *10e-16; //erg K−1
@@ -39,10 +39,13 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
         }
 
     }
-    fn convert_to_cgs(&mut self)  {
+    pub fn convert_to_cgs(&mut self)  {
+        println!("Converting {:?} to CGS",self.sum());
+
         let mut cgs_data = Vec::with_capacity(self.data.len());
         for (point,value) in &self.data{
             let lambda = self.grid1d.location(*point);
+           // println!("lambda is {:?}",lambda);
             let cgs_value = match self.units {
                 SpectrumUnits::F_nu => {value}
                 SpectrumUnits::AbMagnitude => &{
@@ -50,30 +53,36 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
                 SpectrumUnits::Janskys => &{
                     (10f64).powi(-23)*value },
                 SpectrumUnits::f_lambda => &{
-                    6.63*10e-27*value*lambda},
+                    6.63e-27*value*lambda},
                 SpectrumUnits::F_lambda=>&{
-                    3.34*10e-19*lambda*lambda*value}
+                    3.34e-19*lambda*lambda*value}
             };
             cgs_data.push((*point,*cgs_value))
         }
         self.data = cgs_data;
-        self.units = SpectrumUnits::F_nu
+        self.units = SpectrumUnits::F_nu;
+        self.sum();
     }
     pub fn convert_to(&mut self,unit:&SpectrumUnits) {
         self.convert_to_cgs();
+        println!("Converting to else from ");
+        self.sum();
         let mut converted_values = Vec::with_capacity(self.data.len());
         for (point, value) in &self.data {
             let lambda = self.grid1d.location(*point);
+            //println!("lambda is {:?}",lambda);
             let converted_value  = match unit {
                 SpectrumUnits::F_nu => {value},
-                SpectrumUnits::F_lambda => &{3.00 * 10e18 * value / (lambda.powi(2))},
-                SpectrumUnits::f_lambda => &{1.51 * 10f64.powi(26) * value / lambda},
+                SpectrumUnits::F_lambda => &{3.00e18 * value / (lambda.powi(2))},
+                SpectrumUnits::f_lambda => &{1.51e26 * value / lambda},
                 SpectrumUnits::AbMagnitude => &{-2.5 * value.log10() - 48.6},
                 SpectrumUnits::Janskys => &{(10f64).powi(23) * value},
             };
             converted_values.push((*point,*converted_value));
         }
         self.data = converted_values;
+        self.units = unit.clone();
+        self.sum();
     }
 
     pub fn flat_AB(ab_mag:f64,grid1d:GRID1D,label:&'static str)-> PowerSpectrum {
@@ -81,6 +90,20 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
         let mut data = Vec::with_capacity(grid1d.num());
         for point in 0..grid1d.num(){
             data.push((point,ab_mag))
+        }
+        PowerSpectrum{
+            grid1d,
+            data,
+            units,
+            label,
+        }
+    }
+
+    pub fn flat(f_lambda:f64,grid1d:GRID1D,label:&'static str)-> PowerSpectrum {
+        let units = SpectrumUnits::f_lambda;
+        let mut data = Vec::with_capacity(grid1d.num());
+        for point in 0..grid1d.num(){
+            data.push((point,f_lambda))
         }
         PowerSpectrum{
             grid1d,
@@ -124,11 +147,21 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
         
     }
     pub fn total_average_photon_flux(&mut self)->f64{
-        self.convert_to(&f_lambda);
+        self.convert_to(&SpectrumUnits::f_lambda);
         let sum:f64 = self.data.iter()
             .map(|(_point_num,value)|value).sum();
-        sum as f64 *self.grid1d.step_size
+        sum as f64 *self.grid1d.step_size*10.0
     }
+
+    pub fn sum(&self)-> f64{
+        let sum = self.data.iter().map(|(i,v)| v).sum();
+        println!("SUM is {:?}, units are {:?}",sum, self.units);
+        //println!("{:?}",self.data);
+        sum
+    }
+
+
+
 }
 
 

@@ -256,7 +256,7 @@ dependencies = [
 
 [[package]]
 name = "astroimsim-spectra"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "astroimsim-geometry",
  "eframe",
