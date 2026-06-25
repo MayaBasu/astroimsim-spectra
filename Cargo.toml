@@ -1,6 +1,6 @@
 [package]
 name = "astroimsim-spectra"
-version = "0.1.7"
+version = "0.1.8"
 edition = "2024"
 license = "MIT"
 description = "Spectra package for astroimsim ecosystem."
