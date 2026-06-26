@@ -12,6 +12,8 @@ mod visualize;
 
 
 fn main() {
+    visulaize()
+    /*
 
     let grid: GRID1D = GRID1D::new_empty(1.0,100.0,1000.0,0.01,1.0);
 
@@ -23,6 +25,8 @@ fn main() {
     a.convert_to(&f_lambda);
 
     a.convert_to(&f_lambda);
+
+     */
 
 
    // visulaize()

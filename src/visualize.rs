@@ -3,7 +3,7 @@ use egui::Response;
 use crate::power_spectrum::{PowerSpectrum, SpectrumUnits};
 use crate::power_spectrum::SpectrumUnits::{F_lambda, F_nu};
 use crate::spectral_response::SpectralResponseCurve;
-pub const STANDARD_SPECTRAL_GRID: GRID1D = GRID1D::new_empty(1.0,10.0,1100.0,0.01,1.0);
+pub const STANDARD_SPECTRAL_GRID: GRID1D = GRID1D::new_empty(1.0,100.0,1100.0,0.01,1.0);
 
 pub fn visulaize(){
 
@@ -84,10 +84,17 @@ pub fn visulaize(){
     // println!("{:?}",input_spectrum)
 
     nuv_path.apply_spectral_response(&FUV_CONTAMINATION);
+
     nuv_path.write_to_dat("full_nuv","All effects NUV");
 
     fuv_path.apply_spectral_response(&FUV_CONTAMINATION);
     fuv_path.write_to_dat("full_fuv","All effects FUV");
+
+
+
+    println!("fuv: {:?}",fuv_path.total_average_photon_flux(4417.864669110647)*0.76153773);
+    println!("nuv: {:?}",nuv_path.total_average_photon_flux(4417.864669110647)*0.76153773);
+
 
 
 }

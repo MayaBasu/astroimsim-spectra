@@ -146,11 +146,12 @@ impl PowerSpectrum { //https://vitaly.neustroev.net/useful-info/conversions/
         self.data = new_values;
         
     }
-    pub fn total_average_photon_flux(&mut self)->f64{
-        self.convert_to(&SpectrumUnits::f_lambda);
+    pub fn total_average_photon_flux(&mut self,area:f64)->f64{
+        //self.convert_to(&SpectrumUnits::f_lambda);
         let sum:f64 = self.data.iter()
             .map(|(_point_num,value)|value).sum();
-        sum as f64 *(self.grid1d.step_size/10.0)*4417.0
+        sum*area
+         //TODO NUM OR NUM + !??
     }
 
     pub fn sum(&self)-> f64{
