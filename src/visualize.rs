@@ -27,13 +27,13 @@ pub fn visulaize(){
 
   //  let FUV_CONTAMINATION: SpectralResponseCurve = SpectralResponseCurve::new("FUV_CONTAMINATION",FUV_CONTAMINATION_GRID,FUV_CONTAMINATION_PATH);
    // let NUV_CONTAMINATION: SpectralResponseCurve = SpectralResponseCurve::new("NUV_CONTAMINATION",NUV_CONTAMINATION_GRID,NUV_CONTAMINATION_PATH);
-    let mut FUV_DICHROIC: SpectralResponseCurve = SpectralResponseCurve::new("FUV_DICHROIC",DICHROIC_GRID,DICHROIC_PATH,1,"      ");
-    let mut NUV_DICHROIC: SpectralResponseCurve = SpectralResponseCurve::new("NUV_DICHROIC",DICHROIC_GRID,DICHROIC_PATH,2,"      ");
-    let mut  NUV_QE: SpectralResponseCurve = SpectralResponseCurve::new("NUV_QE",NUV_QE_CURVE_GRID,NUV_QE_CURVE_PATH,1,"   ");
-    let mut FUV_CONTAMINATION:SpectralResponseCurve = SpectralResponseCurve::new("FUV Contamination",FUV_CONTAMINATION_GRID,FUV_CONTAMINATION_PATH,1,"   ");
+    let mut FUV_DICHROIC: SpectralResponseCurve = SpectralResponseCurve::new("FUV_DICHROIC".to_string(),DICHROIC_GRID,DICHROIC_PATH.to_string(),1,"      ");
+    let mut NUV_DICHROIC: SpectralResponseCurve = SpectralResponseCurve::new("NUV_DICHROIC".to_string(),DICHROIC_GRID,DICHROIC_PATH.to_string(),2,"      ");
+    let mut  NUV_QE: SpectralResponseCurve = SpectralResponseCurve::new("NUV_QE".to_string(),NUV_QE_CURVE_GRID,NUV_QE_CURVE_PATH.to_string(),1,"   ");
+    let mut FUV_CONTAMINATION:SpectralResponseCurve = SpectralResponseCurve::new("FUV Contamination".to_string(),FUV_CONTAMINATION_GRID,FUV_CONTAMINATION_PATH.to_string(),1,"   ");
     FUV_CONTAMINATION.write_to_dat("contamination","FUV contamination");
-    let mut NUV_FILTER_CURVE:SpectralResponseCurve = SpectralResponseCurve::new("NUV Filter response",NUV_RESPONSE_GRID,NUV_RESPONSE_PATH,1,"   ");
-    let mut FUV_FILTER_CURVE:SpectralResponseCurve = SpectralResponseCurve::new("FUV Filter response",FUV_RESPONSE_GRID,FUV_RESPONSE_PATH,1,"   ");
+    let mut NUV_FILTER_CURVE:SpectralResponseCurve = SpectralResponseCurve::new("NUV Filter response".to_string(),NUV_RESPONSE_GRID,NUV_RESPONSE_PATH.to_string(),1,"   ");
+    let mut FUV_FILTER_CURVE:SpectralResponseCurve = SpectralResponseCurve::new("FUV Filter response".to_string(),FUV_RESPONSE_GRID,FUV_RESPONSE_PATH.to_string(),1,"   ");
 
     NUV_FILTER_CURVE.write_to_dat("nuv_filter_curve","NUV Filter curve");
     FUV_FILTER_CURVE.write_to_dat("fuv_filter_curve","FUV Filter curve");
@@ -44,7 +44,7 @@ pub fn visulaize(){
 
 
       //let DICHROIC: SpectralResponseCurve = SpectralResponseCurve::new("DICHROIC",DICHROIC_GRID,DICHROIC_PATH);
-    let mut MIRROR_CURVE:SpectralResponseCurve = SpectralResponseCurve::new("Mirror", MIRROR_GRID, MIRROR_PATH,1,"    ");
+    let mut MIRROR_CURVE:SpectralResponseCurve = SpectralResponseCurve::new("Mirror".to_string(), MIRROR_GRID, MIRROR_PATH.to_string(),1,"    ");
     MIRROR_CURVE.re_grid(&STANDARD_SPECTRAL_GRID);
     let mut MIRROR_CURVE_3 = MIRROR_CURVE.clone();
     MIRROR_CURVE_3.self_compose(3);

@@ -9,14 +9,14 @@ use crate::visualize::{visulaize, STANDARD_SPECTRAL_GRID};
 pub struct SpectralResponseCurve {
     pub grid1d: GRID1D,
     pub data: Vec<(usize, f64)>, //a vector of values (point number on grid, data value at that point)
-    pub label: &'static str,
-    pub dat_path: &'static str, //None, list (combination), or multiline, or single line regualr
+    pub label: String,
+    pub dat_path: String, //None, list (combination), or multiline, or single line regualr
 }
 
 
 impl SpectralResponseCurve {
 
-    pub fn new(label:&'static str, grid1d: GRID1D,dat_path:&'static str,n:usize,delineator:&str)-> SpectralResponseCurve{
+    pub fn new(label:String, grid1d: GRID1D,dat_path:String,n:usize,delineator:&str)-> SpectralResponseCurve{
         let mut new = SpectralResponseCurve{
             grid1d,
             data:vec![],
@@ -52,7 +52,7 @@ impl SpectralResponseCurve {
         assert_eq!(0, self.data.len(), "Loading data {:?} into would overwrite current data", self.label);
         println!("Loading {:?} into {:?}", self.dat_path, self.label);
         let start = Instant::now();
-        let file = File::open(self.dat_path).expect("Failed to open file");
+        let file = File::open(self.dat_path.clone()).expect("Failed to open file");
         let reader = BufReader::new(file);
         let mut data: Vec<Vec<f64>> = Vec::new();
         for line in reader.lines(){
@@ -164,7 +164,7 @@ impl SpectralResponseCurve {
         let mut labels = Vec::new();
         for response in responses[1..].iter_mut() {
             response.re_grid(&grid);
-            labels.push(response.label);
+            labels.push(response.label.clone());
             for index in 0..grid.num(){
                 let value = response.get_data(index);
                 new_data[index].1 *= value;
@@ -173,8 +173,8 @@ impl SpectralResponseCurve {
         SpectralResponseCurve{
             grid1d: grid.clone(),
             data: new_data.clone(),
-            label: "Composition of some stuff (TODO: ADD WHICH STUFF))",
-            dat_path: "N/A", //TODO add alterantive data
+            label: "Composition of some stuff (TODO: ADD WHICH STUFF))".to_string(),
+            dat_path: "N/A".to_string(), //TODO add alterantive data
         }
 
     }
